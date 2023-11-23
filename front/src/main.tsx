@@ -7,11 +7,17 @@ import {
   RouterProvider
 } from 'react-router-dom'
 import ErrorPage from './error-page.jsx'
+import RedirectRoute from './routes/redirectRoute.tsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: '/redirect',
+    element: <RedirectRoute />,
     errorElement: <ErrorPage />
   },
 ])

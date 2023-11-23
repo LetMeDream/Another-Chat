@@ -3,6 +3,7 @@ import '../App.css'
 import UsernameModal from '../components/UsernameModal'
 import { MenuProfile } from '../components/MenuProfile'
 import { io } from 'socket.io-client'
+import { Link } from 'react-router-dom'
 
 const socket = io('192.168.0.104:3000')
 
@@ -23,7 +24,7 @@ const Root = () => {
 	const handleClose = () => setOpen(false)
 
 	/* Socket logic */
-	const [isConnected, setIsConnected] = useState(false)
+	const [, setIsConnected] = useState(false)
 	useEffect(() => {
 		/* Subscriptions */
 		socket.on('connect', () => setIsConnected(true))
@@ -52,7 +53,9 @@ const Root = () => {
       <div id="sidebar" className='s shadow-lg relative bg-[#d7d5d5] flex flex-col w-full sm:max-w-[70vw]'>
 
 				<div className='border-[1px] border-b-[#e3e3e3] px-0 flex items-center justify-between'>
-					<h1>Such a chat</h1>
+					<Link to='/redirect'>
+						<h1>Such a chat</h1>
+					</Link>
 					{username.length ? 
 							<MenuProfile 
 								username={username} 
@@ -100,6 +103,11 @@ const Root = () => {
 								className='w-full outline-none py-2 px-3 shadow-custom hover:shadow-customHover active:shadow-customActive focus:shadow-customActive' 
 								value={newMessage}
 								onChange={(e) => setNewMessage(e.target.value)}
+								onKeyUp={(e) => {
+									if (e.key === 'Enter'){
+										handleSend()
+									}
+								}}
 							/>
 							<button type="button" onClick={handleSend} className='py-2 px-3 shadow-custom hover:shadow-customHover'>Send</button>
 						</>
