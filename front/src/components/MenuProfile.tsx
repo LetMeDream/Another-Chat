@@ -7,10 +7,11 @@ interface MenuProfileProps {
     username: string;
     setUsername: React.Dispatch<React.SetStateAction<string>>;
     handleOpen: () => void;
+    handleOpenQR: () => void;
 }
    
 
-export const MenuProfile: React.FC<MenuProfileProps> = ({username, setUsername, handleOpen}) => {
+export const MenuProfile: React.FC<MenuProfileProps> = ({username, setUsername, handleOpen, handleOpenQR}) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -24,6 +25,11 @@ export const MenuProfile: React.FC<MenuProfileProps> = ({username, setUsername, 
     setAnchorEl(null)
     setUsername('')
     handleOpen()
+  }
+
+  const openQR = () => {
+    setAnchorEl(null);
+    handleOpenQR()
   }
 
   return (
@@ -47,7 +53,7 @@ export const MenuProfile: React.FC<MenuProfileProps> = ({username, setUsername, 
         }}
       >
         <MenuItem onClick={handleUsernameChange}>Change username</MenuItem>
-        <MenuItem onClick={handleClose}>QR Code</MenuItem>
+        <MenuItem onClick={openQR}>QR Code</MenuItem>
       </Menu>
     </div>
   );

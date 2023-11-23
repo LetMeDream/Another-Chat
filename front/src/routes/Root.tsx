@@ -4,6 +4,7 @@ import UsernameModal from '../components/UsernameModal'
 import { MenuProfile } from '../components/MenuProfile'
 import { io } from 'socket.io-client'
 import { Link } from 'react-router-dom'
+import QRModal from '../components/QRModal'
 
 const socket = io('192.168.0.104:3000')
 
@@ -17,11 +18,16 @@ const Root = () => {
 	const [messages, setMessages] = useState<Message[]>([])
 	const [newMessage, setNewMessage] = useState('');
 
-	/* Username logic */
+	/* USERNAME modal logic */
 	const [username, setUsername] = useState('Let')
 	const [open, setOpen] = React.useState(false)
 	const handleOpen = () => setOpen(true)
 	const handleClose = () => setOpen(false)
+
+	/* QR modal logic */
+	const [openQR, setOpenQR] = React.useState(false)
+	const handleOpenQR = () => setOpenQR(true)
+	const handleCloseQR = () => setOpenQR(false)
 
 	/* Socket logic */
 	const [, setIsConnected] = useState(false)
@@ -48,12 +54,14 @@ const Root = () => {
 		setNewMessage('')
 	}
 
+	const urlValue = `http://192.168.0.104:5173/redirect/${username}`
+
   return (
     <div className='flex justify-center w-[100vw]'>
       <div id="sidebar" className='s shadow-lg relative bg-[#d7d5d5] flex flex-col w-full sm:max-w-[70vw]'>
 
 				<div className='border-[1px] border-b-[#e3e3e3] px-0 flex items-center justify-between'>
-					<Link to='/redirect'>
+					<Link to={urlValue} target='_blank'>
 						<h1>Such a chat</h1>
 					</Link>
 					{username.length ? 
@@ -61,6 +69,8 @@ const Root = () => {
 								username={username} 
 								setUsername={setUsername}
 								handleOpen={handleOpen}
+
+								handleOpenQR={handleOpenQR}
 							/>
 					: null}
 				</div>
@@ -130,6 +140,7 @@ const Root = () => {
         </div>
 
 				<UsernameModal handleClose={handleClose} open={open} setUsername={setUsername} username={username} />
+				<QRModal handleClose={handleCloseQR} open={openQR} value={urlValue} />
       </div>
     </div>
   )
