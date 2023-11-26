@@ -1,44 +1,22 @@
-import React, {useEffect, useState} from 'react'
-import { io } from 'socket.io-client'
-const socket = io('192.168.0.104:3000')
 import { useParams } from 'react-router-dom'
 
+import { useRedirectRoute } from '../hooks/useRedirectRoute'
+
 const RedirectRoute = () => {
-	const [isConnected, setIsConnected] = useState(false)
 	const { username } = useParams()
-
-	useEffect(() => {
-		/* Subscriptions */
-		socket.on('connect', () => setIsConnected(true))
-
-
-		/* Unsubscriptions */
-		return () => {
-			socket.off('add_message')
-		}
-	}, [])
-
-	useEffect(() => {
-		if(isConnected && username) console.log('Hello ' + username)
-	}, [isConnected, username])
+	/* Redirect logic */
+	const { buttons} = useRedirectRoute(username)
 
   return (
     <div className='flex w-[100vw] min-h-[90-vh] items-center justify-center'>
 			<section className='w-full flex flex-col gap-4 items-center'>
 				<div>
-					Grabe su vídeo, <span className=' font-medium uppercase'>{username}</span>
+					Record your video, <span className=' font-medium uppercase'>{username}</span>
 				</div>
-				<div className="cam-preview border min-w-[50%] w-[50%] h-[200px] border-red-600">
+				<video autoPlay muted className='w-[520px] max-w-[100vw] min-h-[50vh] h-[260px]' id='cam-recording' />
+				<video className='w-[520px] max-w-[100vw] min-h-[50vh] h-[260px] border border-red-900 hidden' id='recording-preview' />
 
-				</div>
-				<button className='py-2 px-3 shadow-custom hover:enabled:shadow-customHover'>
-					Iniciar grabación
-				</button>
-
-				{/* <div className="btns">
-					<button className='py-2 px-3 shadow-custom hover:enabled:shadow-customHover'>Yes</button>
-					<button className='py-2 px-3 shadow-custom hover:enabled:shadow-customHover'>No</button>
-				</div> */}
+				{buttons}
 			</section>
 		</div>
   )
