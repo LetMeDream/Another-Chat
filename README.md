@@ -26,7 +26,7 @@ In order to run the app, follow these instructions for each part:
 
 ### Important Note
 If you are running a local dev server, you will encounter issues related to insecure origins in Chrome (since mediaNavigator permissions require an https connection), so you will have
-to activate the 'unsafely-treat-insecure-origin-as-secure' option.
+to activate the 'unsafely-treat-insecure-origin-as-secure' option (if you want to be able to use the QR code functionality from a mobile device, that's it)
 
 Open Chrome and go to the following link:
 
