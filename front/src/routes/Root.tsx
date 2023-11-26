@@ -82,7 +82,7 @@ const Root = () => {
 
 				<div className='border-[1px] border-b-[#e3e3e3] px-0 flex items-center justify-between'>
 					<Link to={`/redirect/${username}`} target='_blank'>
-						<h1>Such a chat</h1>
+						<h1>Another Chat</h1>
 					</Link>
 					{username.length ? 
 							<MenuProfile 
