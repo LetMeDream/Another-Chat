@@ -59,8 +59,10 @@ export const useRedirectRoute = (username: string | undefined) => {
 	const handleCancel = () => {
 		setStatus('idle')
 		stopBothVideoAndAudio()
-		const vid: HTMLVideoElement | null = document.querySelector('#cam-preview')
-		vid!.srcObject = null
+		const vid: HTMLVideoElement | null = document.querySelector('#cam-recording')
+		if(vid){
+			vid.srcObject = null
+		} 
 	}
 
 	const pauseRecording = async () => {
