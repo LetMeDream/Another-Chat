@@ -7,6 +7,7 @@ import QRModal from '../components/QRModal'
 import useIncomingVideoModal from '../hooks/useIncomingVideoModal'
 import IncomingVideoModal from '../components/IncomingVideoModal'
 import socket from '../socket'
+import MessageGlobe from '../components/MessageGlobe'
 
 interface Message {
 	user: string;
@@ -98,15 +99,9 @@ const Root = () => {
 				<div className='pt-2 grow'>
 					<ul className='p-0 m-0 list-none'>
 						{
-							messages?.map((message) => {
+							messages?.map((message, index) => {
 								return (
-									<li className='my-1 mx-0 bg-[#e3e3e3] py-2 px-4 cursor-pointer'>
-										<span className=' font-medium text-gray-800'>
-											{message.user}:&nbsp;
-										</span>
-										{message.message}
-										{/* <a href={`/contacts/1`}>Your Name</a> */}
-									</li>
+									<MessageGlobe message={message} messages={messages} key={index} idx={index} />
 								)
 							})
 						}
@@ -119,43 +114,44 @@ const Root = () => {
 					id='messageInput'
 					className='order-2 border-t-[1px] border-[#e3e3e3] flex py-4'
 				>
-					<div id="search-form" role="search" className='flex w-full justify-center gap-2'>
-						{username.length ? 
-						(
-						<>
-							<input
-								id="q"
-								aria-label="New message"
-								placeholder="Message"
-								type="search"
-								name="q"
-								autoComplete='off'
-								className='w-full outline-none py-2 px-3 shadow-custom hover:shadow-customHover active:shadow-customActive focus:shadow-customActive' 
-								value={newMessage}
-								onChange={(e) => setNewMessage(e.target.value)}
-								onKeyUp={(e) => {
-									if (e.key === 'Enter'){
-										handleSend()
-									}
-								}}
-							/>
-							<button type="button" onClick={handleSend} className='py-2 px-3 shadow-custom hover:shadow-customHover'>Send</button>
-						</>
-						) : null}
 
-						{/* No user yet */}
-						{!username.length ? 
-							(	
-								<div>
-									<button 
-										type='button'
-										onClick={handleOpen}
-										className="flex items-center text-sm bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded">
-										Choose you user name!
-									</button>
-								</div>
-							) : null}
-					</div>
+				<div id="search-form" role="search" className='flex w-full justify-center gap-2'>
+					{username.length ? 
+					(
+					<>
+						<input
+							id="q"
+							aria-label="New message"
+							placeholder="Message"
+							type="search"
+							name="q"
+							autoComplete='off'
+							className='w-full outline-none py-2 px-3 shadow-custom hover:shadow-customHover active:shadow-customActive focus:shadow-customActive' 
+							value={newMessage}
+							onChange={(e) => setNewMessage(e.target.value)}
+							onKeyUp={(e) => {
+								if (e.key === 'Enter'){
+									handleSend()
+								}
+							}}
+						/>
+						<button type="button" onClick={handleSend} className='py-2 px-3 shadow-custom hover:shadow-customHover'>Send</button>
+					</>
+					) : null}
+
+					{/* No user yet */}
+					{!username.length ? 
+						(	
+							<div>
+								<button 
+									type='button'
+									onClick={handleOpen}
+									className="flex items-center text-sm bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded">
+									Choose you user name!
+								</button>
+							</div>
+						) : null}
+				</div>
           
         </div>
 
