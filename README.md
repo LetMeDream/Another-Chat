@@ -20,7 +20,7 @@ In order to run the app, follow these instructions for each part:
 2. Navigate to the `front` folder:
 3. Run
 ```
-  cd server
+  cd front
   npm run dev
 ```
 
