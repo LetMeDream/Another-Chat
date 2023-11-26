@@ -105,6 +105,33 @@ export const useRedirectRoute = (username: string | undefined) => {
 		})
 	}
 
+	const retry = async () => {
+		recorder?.destroy()
+		
+		try {
+			const vid: HTMLVideoElement | null = document.querySelector('#cam-recording')
+			vid!.controls = false	
+			vid!.classList.remove('hidden')
+			const preview: HTMLVideoElement | null = document.querySelector('#recording-preview')
+			const stream = await navigator.mediaDevices.getUserMedia({
+				video: true,
+				audio: true
+			})
+			const recorder = new RecordRTCPromisesHandler(stream, {
+				type: 'video',
+				timeSlice: 1000
+			})
+			setStream(stream)
+			setRecorder(recorder)
+			vid!.srcObject = stream
+			setStatus('displaying')
+			preview!.classList.add('hidden')
+		} catch (error) {	
+			console.log(error)
+			alert('error')
+		}
+	}
+
 	switch (status) {
 		case 'idle':
 				buttons =  (<>
@@ -157,7 +184,7 @@ export const useRedirectRoute = (username: string | undefined) => {
 		case 'stopped':
 			buttons =  (<>
 				<div className="buttons flex gap-2">
-					<button type='button' className='py-2 px-3 shadow-custom hover:enabled:shadow-customHover'>
+					<button onClick={retry} type='button' className='py-2 px-3 shadow-custom hover:enabled:shadow-customHover'>
 						Re try
 					</button>
 					<button type='button' onClick={passVideo} className='py-2 px-3 shadow-custom hover:enabled:shadow-customHover'>
