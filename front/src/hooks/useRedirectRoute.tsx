@@ -113,7 +113,7 @@ export const useRedirectRoute = (username: string | undefined) => {
 							Preview
 						</button>
 						<button onClick={ping} className='py-2 px-3 shadow-custom hover:enabled:shadow-customHover'>
-							Notice me!
+							Ping!
 						</button>
 					</div>
 				</>);
@@ -157,14 +157,11 @@ export const useRedirectRoute = (username: string | undefined) => {
 		case 'stopped':
 			buttons =  (<>
 				<div className="buttons flex gap-2">
-					<button type='button' onClick={ping} className='py-2 px-3 shadow-custom hover:enabled:shadow-customHover'>
-						Ping
-					</button>
-					<button type='button' onClick={ping} className='py-2 px-3 shadow-custom hover:enabled:shadow-customHover'>
-						Ping
+					<button type='button' className='py-2 px-3 shadow-custom hover:enabled:shadow-customHover'>
+						Re try
 					</button>
 					<button type='button' onClick={passVideo} className='py-2 px-3 shadow-custom hover:enabled:shadow-customHover'>
-						SocketIt!!!
+						Socket the video!
 					</button>
 
 				</div>
