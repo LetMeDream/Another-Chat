@@ -17,7 +17,7 @@ In order to run the app, follow these instructions for each part:
 
 ### Front 
 1. Open a terminal.
-2. Navigate to the `server` folder:
+2. Navigate to the `front` folder:
 3. Run
 ```
   cd server
