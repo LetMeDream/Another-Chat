@@ -15,16 +15,6 @@ const UsernameModal: FC<UsernameModalProps> = ({handleClose, open, setUsername, 
 
 	const inputRef = useRef<HTMLInputElement>()
 
-	useEffect(() => {
-		setTimeout(() => {
-			if(open && inputRef.current) {
-				inputRef.current.focus()
-				inputRef.current.select()
-			}
-		}, 50);
-
-	}, [open])
-
 	const style = {
 		position: 'absolute',
 		top: '50%',
@@ -50,6 +40,39 @@ const UsernameModal: FC<UsernameModalProps> = ({handleClose, open, setUsername, 
 	const focus = () => {
 		if(inputRef.current) inputRef.current.focus()
 	}
+
+	useEffect(() => {
+		setTimeout(() => {
+			if(open && inputRef.current) {
+				inputRef.current.focus()
+				inputRef.current.select()
+			}
+		}, 50);
+
+	}, [open])
+
+	useEffect(() => {
+		const getRandomName = async () => {
+			const url = 'https://random-user-api.p.rapidapi.com/api';
+			const options = {
+				method: 'GET',
+				headers: {
+					'X-RapidAPI-Key': 'd9be25404bmshfb8bddab1e2bf5ep1e7ea9jsn697eb6fd4613',
+					'X-RapidAPI-Host': 'random-user-api.p.rapidapi.com'
+				}
+			};
+
+			try {
+				const response = await fetch(url, options);
+				const result = await response.json();
+				console.log(result.results[0]);
+				setNewUsername(result.results[0].name.first || result.results[0].name.last)
+			} catch (error) {
+				console.error(error);
+			}
+		}
+		getRandomName()
+	}, [open])
 
   return (
     <Modal
