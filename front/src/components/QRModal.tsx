@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import {FC} from 'react'
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import QRCode from 'react-qr-code';
@@ -18,9 +18,9 @@ const QRModal: FC<UsernameModalProps> = ({open, handleClose, value}) => {
 		transform: 'translate(-50%, -50%)',
 		borderRadius: '8px',
 		width: 400,
-		bgcolor: 'background.paper',
+		bgcolor: 'white',
 		boxShadow: 24,
-		p: 3,
+		p: 4,
 		display: 'flex'
 	}
 

@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react'
+import React, {FC, useState, useEffect, useRef} from 'react'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import { MdDeleteSweep } from "react-icons/md"
@@ -12,6 +12,18 @@ interface UsernameModalProps {
 
 const UsernameModal: FC<UsernameModalProps> = ({handleClose, open, setUsername, username}) => {
 	const [newUsername, setNewUsername] = useState(username || '')
+
+	const inputRef = useRef<HTMLInputElement>()
+
+	useEffect(() => {
+		setTimeout(() => {
+			if(open && inputRef.current) {
+				inputRef.current.focus()
+				inputRef.current.select()
+			}
+		}, 50);
+
+	}, [open])
 
 	const style = {
 		position: 'absolute',
@@ -34,6 +46,10 @@ const UsernameModal: FC<UsernameModalProps> = ({handleClose, open, setUsername, 
 	const handleKey = (e: React.KeyboardEvent) => {
 		if (e.key === 'Enter') saveUsername()
 	}
+ 
+	const focus = () => {
+		if(inputRef.current) inputRef.current.focus()
+	}
 
   return (
     <Modal
@@ -45,6 +61,7 @@ const UsernameModal: FC<UsernameModalProps> = ({handleClose, open, setUsername, 
 			<Box sx={style}>
 				<div className='w-full flex gap-1'>
 					<input 
+						ref={inputRef as React.LegacyRef<HTMLInputElement>}
 						value={newUsername}
 						onChange={(e) => setNewUsername(e.target.value)}
 						onKeyUp={handleKey}
@@ -58,7 +75,7 @@ const UsernameModal: FC<UsernameModalProps> = ({handleClose, open, setUsername, 
 					>
 						Ready
 					</button>
-					<button className='p-2 shadow-custom hover:shadow-customHover transition-all hover:border-red-400'>
+					<button onClick={focus} className='p-2 shadow-custom hover:shadow-customHover transition-all hover:border-red-400'>
 						<MdDeleteSweep className='text-red-500 text-2xl ' />
 					</button>
 				</div>
