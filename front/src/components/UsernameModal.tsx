@@ -71,7 +71,8 @@ const UsernameModal: FC<UsernameModalProps> = ({handleClose, open, setUsername, 
 				console.error(error);
 			}
 		}
-		getRandomName()
+		if(open) getRandomName()
+
 	}, [open])
 
   return (
