@@ -112,9 +112,10 @@ export const useRedirectRoute = (username: string | undefined) => {
 		
 		try {
 			const vid: HTMLVideoElement | null = document.querySelector('#cam-recording')
-			vid!.controls = false	
-			vid!.classList.remove('hidden')
 			const preview: HTMLVideoElement | null = document.querySelector('#recording-preview')
+			vid!.controls = false	
+			preview!.classList.add('hidden')
+			vid!.classList.remove('hidden')
 			const stream = await navigator.mediaDevices.getUserMedia({
 				video: true,
 				audio: true
@@ -127,7 +128,6 @@ export const useRedirectRoute = (username: string | undefined) => {
 			setRecorder(recorder)
 			vid!.srcObject = stream
 			setStatus('displaying')
-			preview!.classList.add('hidden')
 		} catch (error) {	
 			console.log(error)
 			alert('error')
