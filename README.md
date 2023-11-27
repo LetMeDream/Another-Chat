@@ -30,7 +30,7 @@ to activate the 'unsafely-treat-insecure-origin-as-secure' option (if you want t
 
 Open Chrome and go to the following link:
 
-chrome://flags/#unsafely-treat-insecure-origin-as-secure
+[chrome://flags/#unsafely-treat-insecure-origin-as-secure]
 
 Enable the 'unsafely-treat-insecure-origin-as-secure' option.
 
