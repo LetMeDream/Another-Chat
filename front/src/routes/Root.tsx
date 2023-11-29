@@ -12,6 +12,7 @@ import MessageGlobe from '../components/MessageGlobe'
 interface Message {
 	user: string;
 	message: string;
+	date: string;
 }
 
 const Root = () => {
@@ -70,7 +71,8 @@ const Root = () => {
 		/* Start emiting a message */
 		socket.emit('send_message', {
 			user: username,
-			message: newMessage
+			message: newMessage,
+			date: new Date()
 		})
 		setNewMessage('')
 	}

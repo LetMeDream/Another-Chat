@@ -11,6 +11,7 @@ io.on('connection', (socket) => {
 
     /* 'Reacting' to the 'send_message' custom event emitted on the front */
     socket.on('send_message', (payload) => {
+        console.log(payload)
         // After receiving the payload, this is emited to ALL
         io.emit('add_message', payload)
     })
