@@ -57,8 +57,8 @@ const UsernameModal: FC<UsernameModalProps> = ({handleClose, open, setUsername, 
 			const options = {
 				method: 'GET',
 				headers: {
-					'X-RapidAPI-Key': 'd9be25404bmshfb8bddab1e2bf5ep1e7ea9jsn697eb6fd4613',
-					'X-RapidAPI-Host': 'random-user-api.p.rapidapi.com'
+					'X-RapidAPI-Key': import.meta.env.VITE_RAPIDAPI_KEY,
+					'X-RapidAPI-Host': import.meta.env.VITE_RAPIDAPI_HOST
 				}
 			};
 
