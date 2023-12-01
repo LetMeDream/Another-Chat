@@ -2,7 +2,6 @@ import {FC} from 'react'
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import QRCode from 'react-qr-code'
-import usePeer from '../routes/usePeer'
 
 interface UsernameModalProps {
   handleClose: () => void;

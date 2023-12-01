@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import '../App.css'
 import UsernameModal from '../components/UsernameModal'
 import { MenuProfile } from '../components/MenuProfile'
@@ -6,18 +6,18 @@ import { Link } from 'react-router-dom'
 import QRModal from '../components/QRModal'
 import useIncomingVideoModal from '../hooks/useIncomingVideoModal'
 import IncomingVideoModal from '../components/IncomingVideoModal'
-import MessageGlobe from '../components/MessageGlobe'
-import usePeer from './usePeer'
+// import MessageGlobe from '../components/MessageGlobe'
+import usePeer from '../hooks/usePeer'
 
-interface Message {
+/* interface Message {
 	user: string;
 	message: string;
 	date: string;
-}
+} */
 
 const Root = () => {
 	/* Messages */
-	const [messages, setMessages] = useState<Message[]>([])
+	// const [messages, setMessages] = useState<Message[]>([])
 	const [newMessage, setNewMessage] = useState('');
 
 	/* USERNAME modal logic */
@@ -63,13 +63,13 @@ const Root = () => {
 				
 				<div className='pt-2 grow'>
 					<ul className='p-0 m-0 list-none'>
-						{
+						{/* {
 							messages?.map((message, index) => {
 								return (
 									<MessageGlobe message={message} messages={messages} key={index} idx={index} />
 								)
 							})
-						}
+						} */}
 
 
 					</ul>
