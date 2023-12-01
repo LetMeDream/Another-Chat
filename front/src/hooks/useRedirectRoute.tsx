@@ -1,15 +1,21 @@
 import { useState } from 'react'
 import { RecordRTCPromisesHandler, getSeekableBlob } from 'recordrtc'
+import {message} from 'antd'
 /* Socket connection */
-import socket from '../socket'
+import { PeerConnection } from '../helpers/peer'
 
-export const useRedirectRoute = (username: string | undefined) => {
+interface RecorderOfMine extends RecordRTCPromisesHandler {
+	getArrayOfBlobs?: () => Blob[];
+}
+
+export const useRedirectRoute = (userId: string) => {
 	/* Recorder logic */
 	const [recorder, setRecorder] = useState<RecordRTCPromisesHandler | null>(null)
 	const [stream, setStream] = useState<MediaStream | null>()
 	const [status, setStatus] = useState('idle') // 'displaying' | inactive | stopped | paused |recording
 	const [savedBlob, setSavedBlob] = useState<Blob | MediaSource>()
 	//const [savedFile, setSavedFile] = useState<Blob | null>(null)
+	const [currentVideoSize, setCurrentVideoSize] = useState(0)
 
 	let buttons: React.ReactNode
 
@@ -46,14 +52,21 @@ export const useRedirectRoute = (username: string | undefined) => {
 	}
 
 	const startRecording = async () => {
+		(async function looper(){
+			if(!recorder || await recorder.getState() === 'stopped') return
+
+			const internal = await recorder.getInternalRecorder() as RecorderOfMine
+			if(internal && internal.getArrayOfBlobs){
+				const blob = new Blob(internal.getArrayOfBlobs(), {
+					type: 'video/webm'
+				})
+				console.log(blob)
+			}
+			setTimeout(looper, 500)
+		})()
+
 		recorder!.startRecording()
 		setStatus(await recorder!.getState())
-	}
-
-	const ping = () => {
-		socket.emit('ping', {
-			user: username
-		})
 	}
 
 	const handleCancel = () => {
@@ -96,15 +109,16 @@ export const useRedirectRoute = (username: string | undefined) => {
 		})
 	}
 
-	const passVideo = () => {
-		console.log('passVideo function called');
-    console.log('username:', username);
-    console.log('savedBlob:', savedBlob);
-
-		socket.emit('post_video', {
-			user: username,
-			file: savedBlob
-		})
+	const passVideo = async () => {
+		try {
+			await PeerConnection.sendData(userId, {
+				file: savedBlob
+			})
+			message.info("Send video successfully")
+		} catch (error) {
+			console.log(error)
+			message.error('Error sending video')
+		}
 	}
 
 	const retry = async () => {
@@ -134,6 +148,16 @@ export const useRedirectRoute = (username: string | undefined) => {
 		}
 	}
 
+	const sendSomeDataSomehow = async () => {
+		try {
+			await PeerConnection.sendData(userId, 'hi')
+			message.info("Send string successfully")
+		} catch (error) {
+			console.log(error)
+			message.error("Error sending someData")
+		}
+	}
+
 	switch (status) {
 		case 'idle':
 				buttons =  (<>
@@ -141,8 +165,8 @@ export const useRedirectRoute = (username: string | undefined) => {
 						<button onClick={previewRecording} className='py-2 px-3 shadow-custom hover:enabled:shadow-customHover'>
 							Preview
 						</button>
-						<button onClick={ping} className='py-2 px-3 shadow-custom hover:enabled:shadow-customHover'>
-							Ping!
+						<button onClick={sendSomeDataSomehow} className='py-2 px-3 shadow-custom hover:enabled:shadow-customHover'>
+							Connect!
 						</button>
 					</div>
 				</>);
