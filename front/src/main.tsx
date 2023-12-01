@@ -16,14 +16,14 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />
   },
   {
-    path: '/redirect/:username',
+    path: '/redirect/:userId',
     element: <RedirectRoute />,
     errorElement: <ErrorPage />
   },
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+  /* <React.StrictMode> */
     <RouterProvider router={router} />
-  </React.StrictMode>,
+  /* </React.StrictMode>, */
 )
