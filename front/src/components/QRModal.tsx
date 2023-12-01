@@ -1,7 +1,8 @@
 import {FC} from 'react'
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import QRCode from 'react-qr-code';
+import QRCode from 'react-qr-code'
+import usePeer from '../routes/usePeer'
 
 interface UsernameModalProps {
   handleClose: () => void;
@@ -24,7 +25,6 @@ const QRModal: FC<UsernameModalProps> = ({open, handleClose, value}) => {
 		display: 'flex'
 	}
 
-
   return (
     <Modal
         open={open}
@@ -39,6 +39,7 @@ const QRModal: FC<UsernameModalProps> = ({open, handleClose, value}) => {
 						value={value}
 						viewBox={`0 0 256 256`}
 					/>
+
 				</Box>
 		</Modal>
   )

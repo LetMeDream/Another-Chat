@@ -65,7 +65,7 @@ const UsernameModal: FC<UsernameModalProps> = ({handleClose, open, setUsername, 
 			try {
 				const response = await fetch(url, options);
 				const result = await response.json();
-				console.log(result.results[0]);
+				// console.log(result.results[0]);
 				setNewUsername(result.results[0].name.first || result.results[0].name.last)
 			} catch (error) {
 				console.error(error);
