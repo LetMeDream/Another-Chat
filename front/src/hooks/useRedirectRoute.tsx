@@ -61,6 +61,7 @@ export const useRedirectRoute = (userId: string) => {
 					type: 'video/webm'
 				})
 				console.log(blob)
+				setCurrentVideoSize(blob.size)
 			}
 			setTimeout(looper, 500)
 		})()
@@ -86,7 +87,7 @@ export const useRedirectRoute = (userId: string) => {
 	}
 
 	const resumeRecording = async () => {
-		const vid: HTMLVideoElement | null = document.querySelector('#cam-preview')
+		const vid: HTMLVideoElement | null = document.querySelector('#cam-recording')
 		vid!.play()
 		await recorder!.resumeRecording()
 		setStatus(await recorder!.getState())
@@ -123,7 +124,7 @@ export const useRedirectRoute = (userId: string) => {
 
 	const retry = async () => {
 		recorder?.destroy()
-		
+		setCurrentVideoSize(0)
 		try {
 			const vid: HTMLVideoElement | null = document.querySelector('#cam-recording')
 			const preview: HTMLVideoElement | null = document.querySelector('#recording-preview')
@@ -228,7 +229,8 @@ export const useRedirectRoute = (userId: string) => {
   return {
 		status,
 		setStatus,
-		buttons
+		buttons,
+		currentVideoSize
   }
 }
 
