@@ -81,7 +81,7 @@ const usePeer = (autoStart: boolean = false, userId: string = '', handleOpenInco
   }
   /* Only 'connectPeer' if there's an 'userId' */
   if(userId && !isPeerConnected){
-    console.log('connectin to ' + userId)
+    console.log('Attempting to connect to: ' + userId)
     connectPeer(userId, setIsPeerConnected)
   }
   
