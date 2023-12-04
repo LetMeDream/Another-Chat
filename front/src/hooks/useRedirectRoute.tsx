@@ -38,7 +38,7 @@ export const useRedirectRoute = (userId: string) => {
 			})
 			const recorder = new RecordRTCPromisesHandler(stream, {
 				type: 'video',
-				timeSlice: 1000
+				timeSlice: 500
 			})
 			setStream(stream)
 			setRecorder(recorder)
@@ -46,7 +46,7 @@ export const useRedirectRoute = (userId: string) => {
 			setStatus('displaying')
 		} catch (error) {
 			console.log(error)
-			alert('error')
+			alert(error)
 		}
 
 	}
@@ -145,7 +145,7 @@ export const useRedirectRoute = (userId: string) => {
 			setStatus('displaying')
 		} catch (error) {	
 			console.log(error)
-			alert('error')
+			alert(error)
 		}
 	}
 

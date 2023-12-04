@@ -39,7 +39,7 @@ const Root = () => {
 	}
 	
 	const { id } = usePeer(true,'', handleOpenIncomingVideoModal, setPayload)
-	const value = `http://192.168.0.104:5173/redirect/${id}`
+	const value = `http://192.168.0.104:5173/Another-Chat-FE/redirect/${id}`
 
 
   return (
@@ -47,7 +47,7 @@ const Root = () => {
       <div id="sidebar" className='s shadow-lg relative bg-[#d7d5d5] flex flex-col w-full sm:max-w-[70vw]'>
 
 				<div className='border-[1px] border-b-[#e3e3e3] px-0 flex items-center justify-between'>
-					<Link to={`/redirect/${id}`} target='_blank'>
+					<Link to={`/Another-Chat-FE/redirect/${id}`} target='_blank'>
 						<h1>Another Chat</h1>
 					</Link>
 					{username.length ? 

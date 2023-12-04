@@ -6,8 +6,8 @@ import { bytesToSize } from 'recordrtc'
 
 const RedirectRoute = () => {
 	/* Redirect logic */
-	const { userId } = useParams()
-	const { isConnected } = usePeer(true, userId)
+	const { userId = '' } = useParams()
+	usePeer(true, userId)
 	
 	const { buttons, currentVideoSize } = useRedirectRoute(userId)
 	useEffect(() => {

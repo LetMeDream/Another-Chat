@@ -12,6 +12,7 @@ import {message} from 'antd'
 const usePeer = (autoStart: boolean = false, userId: string = '', handleOpenIncomingVideoModal?: () => void, setPayload?: Dispatch<SetStateAction<{ user: string, file: File }>>) => {
   const [isConnected, setIsConnected] = useState<boolean>(false)
   const [id, setId] = useState<string>()
+  const [isPeerConnected, setIsPeerConnected] = useState(false)
 
   
   useEffect(() => {
@@ -71,17 +72,17 @@ const usePeer = (autoStart: boolean = false, userId: string = '', handleOpenInco
    *
    * @async
    * */
-  const connectPeer = async (remoteId: string) => {
+  const connectPeer = async (remoteId: string, setIsPeerConnected: (val: boolean) => void) => {
     try {
-      await PeerConnection.connectPeer(remoteId)
+      await PeerConnection.connectPeer(remoteId, setIsPeerConnected)
     } catch (error) {
       console.log(error)
     }
   }
   /* Only 'connectPeer' if there's an 'userId' */
-  if(userId){
+  if(userId && !isPeerConnected){
     console.log('connectin to ' + userId)
-    connectPeer(userId)
+    connectPeer(userId, setIsPeerConnected)
   }
   
 

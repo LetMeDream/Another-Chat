@@ -14,23 +14,27 @@ export interface Data {
 
 export const PeerConnection = {
   getPeer: () => peer,
-  startPeerSession: (setIsConnected: (value: boolean) => void, setId: (value: string) => void) => new Promise<string>((resolve, reject) => {
-	try {
-		peer = new Peer()
-		peer.on('open', (id) => {
-			console.log('My ID: ' + id)
-			setId(id)
-			setIsConnected(true)
-			resolve(id)
-		}).on('error', (err) => {
+  startPeerSession: (
+		setIsConnected: (value: boolean) => void, 
+		setId: (value: string) => void
+	) => new Promise<string>((resolve, reject) => {
+		try {
+			peer = new Peer()
+			peer.on('open', (id) => {
+				console.log('My ID: ' + id)
+				setId(id)
+				setIsConnected(true)
+				resolve(id)
+			})
+			peer.on('error', (err) => {
+				console.log(err)
+				setIsConnected(false)
+				message.error(err.message)
+			})
+		} catch (err) {
 			console.log(err)
-			setIsConnected(false)
-			message.error(err.message)
-		})
-	} catch (err) {
-		console.log(err)
-		reject()
-	}
+			reject()
+		}
   }),
   onIncomingConnection: (callback: (conn: DataConnection) => void) => {
 		peer?.on('connection', function (conn) {
@@ -71,32 +75,35 @@ export const PeerConnection = {
 			})
 		}
 	},
-	connectPeer: (remoteId: string) => new Promise<void>((resolve, reject) => {
+	connectPeer: (remoteId: string, setIsPeerConnected: (val: boolean) => void) => new Promise<void>((resolve, reject) => {
 		if (!peer) {
 			reject(new Error("Peer doesn't start yet"))
 			return
 		}
-		if (connectionMap.has(remoteId)) {
+		if(connectionMap.has(remoteId)) {
 			reject(new Error("Connection already existed"))
 			return
 		}
 		try {
-			const conn = peer.connect(remoteId, {reliable: true})
+			const conn = peer?.connect(remoteId, {reliable: true})
 			if (!conn) {
 					reject(new Error("Connection can't be established"))
 			} else {
 					conn.on('open', function() {
 							console.log("Connect to: " + remoteId)
+							setIsPeerConnected(true)
 							connectionMap.set(remoteId, conn)
 							resolve()
-					}).on('error', function(err) {
+					})
+					conn.on('error', function(err: string) {
 							console.log(err)
 							reject(err)
 					})
 			}
-	} catch (err) {
-			reject(err)
-	}
+		} catch (err) {
+				console.log(err)
+				reject(err)
+		}
 	}),
 	sendData: (remoteId: string, data: Data | string) => new Promise((resolve, reject) => {
 		if (!connectionMap.has(remoteId)) {
@@ -107,6 +114,7 @@ export const PeerConnection = {
 			const conn = connectionMap.get(remoteId)
 			if (conn) {
 				conn.send(data)
+				resolve(data)
 			}
 		} catch (error) {
 			reject(error)
