@@ -149,15 +149,6 @@ export const useRedirectRoute = (userId: string) => {
 		}
 	}
 
-	const sendSomeDataSomehow = async () => {
-		try {
-			await PeerConnection.sendData(userId, 'hi')
-			message.info("Send string successfully")
-		} catch (error) {
-			console.log(error)
-			message.error("Error sending someData")
-		}
-	}
 
 	switch (status) {
 		case 'idle':
@@ -165,9 +156,6 @@ export const useRedirectRoute = (userId: string) => {
 					<div className="buttons flex gap-2">
 						<button onClick={previewRecording} className='py-2 px-3 shadow-custom hover:enabled:shadow-customHover'>
 							Preview
-						</button>
-						<button onClick={sendSomeDataSomehow} className='py-2 px-3 shadow-custom hover:enabled:shadow-customHover'>
-							Connect!
 						</button>
 					</div>
 				</>);
