@@ -8,6 +8,7 @@ import useIncomingVideoModal from '../hooks/useIncomingVideoModal'
 import IncomingVideoModal from '../components/IncomingVideoModal'
 // import MessageGlobe from '../components/MessageGlobe'
 import usePeer from '../hooks/usePeer'
+import useRoot from '../hooks/useRoot'
 
 /* interface Message {
 	user: string;
@@ -21,7 +22,7 @@ const Root = () => {
 	const [newMessage, setNewMessage] = useState('');
 
 	/* USERNAME modal logic */
-	const [username, setUsername] = useState('user')
+	const { username, setUsername } = useRoot()
 	const [open, setOpen] = React.useState(false)
 	const handleOpen = () => setOpen(true)
 	const handleClose = () => setOpen(false)
